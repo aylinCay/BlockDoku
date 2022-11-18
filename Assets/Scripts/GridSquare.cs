@@ -43,6 +43,18 @@ namespace BlockDoku
             SquareOccupied = true;
         }
 
+        public void Deactive()
+        {
+            activeImage.gameObject.SetActive(false);
+            
+        }
+
+        public void ClearOccupied()
+        {
+            Selected = false;
+            SquareOccupied = false;
+        }
+
         public void SetImage(bool setFistImage)
         {
             gridImage.GetComponent<Image>().sprite = setFistImage ? gridImages[1] : gridImages[0];

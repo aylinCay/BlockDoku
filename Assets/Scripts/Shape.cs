@@ -16,7 +16,7 @@ namespace BlockDoku
         [HideInInspector]
         public ShapeData CurrentShapeData;
         
-        public int TotalSquareNuber { get; set; }
+        public int TotalSquareNumber { get; set; }
 
         private List<GameObject> _currentShape = new List<GameObject>();
         private Vector3 _shapeStartScale;
@@ -114,9 +114,9 @@ namespace BlockDoku
         public void CreateShape(ShapeData shapeData)
         {
             CurrentShapeData = shapeData;
-            TotalSquareNuber = GetNumberOfSquares(shapeData);
+            TotalSquareNumber = GetNumberOfSquares(shapeData);
 
-            while (_currentShape.Count <= TotalSquareNuber)
+            while (_currentShape.Count <= TotalSquareNumber)
             {
                 _currentShape.Add(Instantiate(squareShapeImage,transform)as GameObject);
             }
