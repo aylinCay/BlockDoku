@@ -204,6 +204,7 @@ namespace BlockDoku
             }
             var totalScores = 20 * completedLines;
             GameEvents.AddScores(totalScores);
+            CheckIfPlayerLost();
         }
 
         private int CheckIfSquareComleted(List<int[]> data)
@@ -263,11 +264,23 @@ namespace BlockDoku
             for (var index = 0; index < shapeStorage.shapeList.Count; index++)
             {
                 var isShapeActive = shapeStorage.shapeList[index].IsAnyOfShapeSquareActive();
-                
+                if (CheckIfShapeCanBePlaceOnGrid(shapeStorage.shapeList[index]) && isShapeActive)
+                {
+                    shapeStorage.shapeList[index]?.ActivateShape();
+                    validShapes++;
+                }
+
+            }
+
+            if (validShapes == 0)
+            {
+                //GameOver
+               // GameEvents.GameOver(false);
+                Debug.Log("GameOver");
             }
         }
 
-        private void CheckIfShapeCanBePlaceOnGrid(Shape currentShape)
+        private bool  CheckIfShapeCanBePlaceOnGrid(Shape currentShape)
         {
             var currentShapeData = currentShape.CurrentShapeData;
             var shapeColumns = currentShapeData.columns;
@@ -299,7 +312,23 @@ namespace BlockDoku
             foreach (var number in squareList)
             {
                 bool shapeCanBePlacedOntheBoard = false;
+
+                foreach (var squareIndexToCheck in originalShapeFilledUpSquares)
+                {
+                    var comp = _gridSquares[number[squareIndex]].GetComponent<GridSquare>();
+                    if (comp.SquareOccupied)
+                    {
+                        shapeCanBePlacedOntheBoard = false;
+                    }
+                }
+
+                if (shapeCanBePlacedOntheBoard)
+                {
+                    canBePlaced = true;
+                }
             }
+
+            return canBePlaced;
         }
 
         private List<int[]> GetAllSquaresCombination(int columns, int row)
