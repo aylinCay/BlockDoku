@@ -18,6 +18,8 @@ namespace BlockDoku
         public static Action RequestNewShape;
 
         public static Action SetShapeInActive;
+
+        public static Action<int, int> UpdateBestScore;
     }
 
 }

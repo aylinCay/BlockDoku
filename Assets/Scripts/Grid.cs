@@ -260,27 +260,25 @@ namespace BlockDoku
         private void CheckIfPlayerLost()
         {
             var validShapes = 0;
-            
             for (var index = 0; index < shapeStorage.shapeList.Count; index++)
             {
                 var isShapeActive = shapeStorage.shapeList[index].IsAnyOfShapeSquareActive();
+                
                 if (CheckIfShapeCanBePlaceOnGrid(shapeStorage.shapeList[index]) && isShapeActive)
                 {
                     shapeStorage.shapeList[index]?.ActivateShape();
                     validShapes++;
                 }
-
             }
-
             if (validShapes == 0)
             {
-                //GameOver
-               // GameEvents.GameOver(false);
-                Debug.Log("GameOver");
+                GameEvents.GameOver(false); 
+                
+                
             }
         }
 
-        private bool  CheckIfShapeCanBePlaceOnGrid(Shape currentShape)
+        private bool CheckIfShapeCanBePlaceOnGrid(Shape currentShape)
         {
             var currentShapeData = currentShape.CurrentShapeData;
             var shapeColumns = currentShapeData.columns;
@@ -311,11 +309,11 @@ namespace BlockDoku
 
             foreach (var number in squareList)
             {
-                bool shapeCanBePlacedOntheBoard = false;
+                bool shapeCanBePlacedOntheBoard = true;
 
                 foreach (var squareIndexToCheck in originalShapeFilledUpSquares)
                 {
-                    var comp = _gridSquares[number[squareIndex]].GetComponent<GridSquare>();
+                    var comp = _gridSquares[number[squareIndexToCheck]].GetComponent<GridSquare>();
                     if (comp.SquareOccupied)
                     {
                         shapeCanBePlacedOntheBoard = false;
@@ -331,7 +329,7 @@ namespace BlockDoku
             return canBePlaced;
         }
 
-        private List<int[]> GetAllSquaresCombination(int columns, int row)
+        private List<int[]> GetAllSquaresCombination(int columns, int rows)
         {
             var squareList = new List<int[]>();
             var lastColumnIndex = 0;
@@ -343,7 +341,7 @@ namespace BlockDoku
             {
                 var rowData = new List<int>();
 
-                for ( row = lastRowIndex; row < lastRowIndex + rows; row++)
+                for (var row = lastRowIndex; row < lastRowIndex + rows; row++)
                 {
                     for (var column = lastColumnIndex; column < lastColumnIndex + columns; column++)
                     {
@@ -352,6 +350,7 @@ namespace BlockDoku
                 }
                 
                 squareList.Add(rowData.ToArray());
+                
                 lastColumnIndex++;
 
                 if (lastColumnIndex + (columns - 1) >= 9)
@@ -361,6 +360,7 @@ namespace BlockDoku
                 }
 
                 safeIndex++;
+                
                 if (safeIndex > 100)
                 {
                     break;
