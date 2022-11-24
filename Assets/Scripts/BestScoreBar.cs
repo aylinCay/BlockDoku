@@ -25,9 +25,9 @@ namespace BlockDoku
         public void UpdateBestScoreBar(int currentScore, int bestScore)
         {
             float curretnPrecentage = (float)currentScore / (float)bestScore;
-            fillInImage.fillAmount = curretnPrecentage;
-            bestScoreText.text = bestScore.ToString();
-            bestScoreText.text = bestScore.ToString();
+            fillInImage.fillAmount = (float)curretnPrecentage;
+            bestScoreText.text = curretnPrecentage.ToString();
+
         }
         
     }

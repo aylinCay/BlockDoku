@@ -203,7 +203,7 @@ namespace BlockDoku
                 //plat bonus animation
             }
             var totalScores = 20 * completedLines;
-            GameEvents.AddScores(totalScores);
+            GameEvents.AddScores((int)totalScores);
             CheckIfPlayerLost();
         }
 
@@ -272,9 +272,8 @@ namespace BlockDoku
             }
             if (validShapes == 0)
             {
-                GameEvents.GameOver(false); 
-                
-                
+                GameEvents.GameOver(false);
+
             }
         }
 

@@ -40,6 +40,29 @@ namespace BlockDoku
             string fullFileName = fileName + ".dat";
             return File.Exists(path + fullFileName);
         }
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        public static T Read<T>(string fileName)
+        {
+            string path = Application.persistentDataPath + "/saves/";
+            BinaryFormatter formatter = new BinaryFormatter();
+            FileStream fileStream = new FileStream(path + fileName + ".dat", FileMode.Open);
+            T returnType = default(T);
+            try
+            {
+                returnType = (T)formatter.Deserialize(fileStream);
+            }
+            catch (SerializationException e)
+            {
+                Debug.Log("Read file Error : " + e.Message);
+            }
+            finally
+            {
+                fileStream.Close();
+            }
+
+            return returnType;
+        }
     }
 
 }

@@ -7,10 +7,11 @@ namespace BlockDoku
 
     public class GameEvents : MonoBehaviour
     {
+        
         public static Action<bool> GameOver;
-        
+
         public static Action<int> AddScores;
-        
+
         public static Action CheckIfShapeCanBePlaced;
 
         public static Action MoveShapeToStartPosition;
@@ -21,5 +22,4 @@ namespace BlockDoku
 
         public static Action<int, int> UpdateBestScore;
     }
-
 }
